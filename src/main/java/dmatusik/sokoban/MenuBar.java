@@ -9,7 +9,7 @@ public class MenuBar extends JMenuBar {
     private JMenuItem newgame, highscore, help, exit;
     private JMenu menu;
 
-    public MenuBar(){
+    public MenuBar(JMenuItem... menuButton){
         menu = new JMenu("Start");
         newgame = new JMenuItem("Nowa gra");
         highscore = new JMenuItem("Lista najlepszych wynikow");

@@ -11,7 +11,7 @@ public class Launch {
             public void run() {
                 MainFrame frame = new MainFrame("Sokoban", 500, 500);
                 MenuBar bar = new MenuBar();
-                GamePanel panel = new GamePanel();
+                GamePanel panel = new GamePanel(300, 300);
                 frame.setLayout(new BorderLayout());
                 frame.setJMenuBar(bar);
                 frame.add(panel, BorderLayout.CENTER);
