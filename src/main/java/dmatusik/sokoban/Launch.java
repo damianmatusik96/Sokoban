@@ -11,18 +11,19 @@ public class Launch {
             @Override
             public void run() {
                 MainFrame frame = new MainFrame("Sokoban", 500, 500);
-                MenuBar bar = createMenuBar();
                 GamePanel panel = new GamePanel(300, 300);
+                MenuBar bar = createMenuBar(panel);
                 frame.setLayout(new BorderLayout());
                 frame.setJMenuBar(bar);
                 frame.add(panel, BorderLayout.CENTER);
+                panel.clearView();
                 frame.setVisible(true);
             }
         });
 
     }
-    private static MenuBar createMenuBar(){
-        JMenuItem newgame = new NewGameButton();
+    private static MenuBar createMenuBar(GamePanel gamePanel){
+        JMenuItem newgame = new NewGameButton(30, gamePanel);
         JMenuItem highscore = new HighscoreButton();
         JMenuItem help = new HelpButton();
         JMenuItem exit = new ExitButton();

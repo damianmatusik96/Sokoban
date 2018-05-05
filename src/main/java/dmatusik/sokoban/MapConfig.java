@@ -14,12 +14,24 @@ public class MapConfig {
         InputStream mapFile = MapConfig.class.getResourceAsStream(mapFilePath);
         Scanner mapFileReader = new Scanner(mapFile);
         while (mapFileReader.hasNextLine()) {
-            List<Character> charsInLine = new ArrayList<>();
+            List<Character> symbolsInLine = new ArrayList<>();
             String line = mapFileReader.nextLine();
             for (char c : line.toCharArray()) {
-                charsInLine.add(c);
+                symbolsInLine.add(c);
             }
-            lines.add(charsInLine);
+            lines.add(symbolsInLine);
         }
+    }
+
+    public int getVSize(){
+        return lines.size();
+    }
+
+    public int getUSize(){
+        return lines.get(0).size();
+    }
+
+    public char getSymbol(int u, int v){
+        return lines.get(v).get(u);
     }
 } //todo zamknac inputStream mapFile
