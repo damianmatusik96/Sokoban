@@ -10,6 +10,7 @@ public class Level {
     private int index;
     private GamePanel gamePanel;
     private List<Obstacle> obstacles;
+    private Player player;
 
     public Level(int index, int tileSize, MapConfig map, GamePanel gamePanel) {
         this.index = index;
@@ -22,16 +23,25 @@ public class Level {
                 createAndAddObject(u, v, symbol);
             }
         }
+        gamePanel.addKeyListener(player);
     }
     private void createAndAddObject(int u, int v, char symbol) {
         switch(symbol){
             case '#':
                 createAndAddObstacle(u, v);
                 break;
+            case '$':
+                createAndAddPlayer(u, v);
+                break;
             default:
                 //todo throw runtime exception
         }
     }
+
+    private void createAndAddPlayer(int u, int v) {
+        player = new Player(tileSize, u, v, gamePanel);
+    }
+
     private void createAndAddObstacle(int u, int v){
         Obstacle obstacle = new Obstacle(tileSize, u, v);
         obstacles.add(obstacle);
@@ -43,6 +53,7 @@ public class Level {
         for(Obstacle obstacle : obstacles) {
             obstacle.render(g);
         }
+        player.render(g);
         gamePanel.repaint();
     }
 

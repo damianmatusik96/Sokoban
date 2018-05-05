@@ -5,6 +5,7 @@ import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
 
 public class Launch {
+    public static Level LVL;
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -17,6 +18,7 @@ public class Launch {
                 frame.setJMenuBar(bar);
                 frame.add(panel, BorderLayout.CENTER);
                 panel.clearView();
+                panel.setFocusable(true);
                 frame.setVisible(true);
             }
         });

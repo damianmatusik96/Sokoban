@@ -22,5 +22,6 @@ public class NewGameButton extends JMenuItem implements ActionListener {
         MapConfig firstMap = new MapConfig(index);
         Level firstLevel = new Level(index, tileSize, firstMap, gamePanel);
         firstLevel.render();
+        Launch.LVL = firstLevel;
     }
 }
