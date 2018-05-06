@@ -11,7 +11,7 @@ public class Launch {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MainFrame frame = new MainFrame("Sokoban", 500, 500);
+                MainFrame frame = new MainFrame("Sokoban", 400, 400);
                 GamePanel panel = new GamePanel(300, 300);
                 MenuBar bar = createMenuBar(panel);
                 frame.setLayout(new BorderLayout());

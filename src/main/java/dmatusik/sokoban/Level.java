@@ -10,12 +10,18 @@ public class Level {
     private int index;
     private GamePanel gamePanel;
     private List<Obstacle> obstacles;
+    private List<KeyField> keyFields;
+    private List<GreenBox> greenBoxes;
     private Player player;
+    private GameConfig gameConfig;
 
     public Level(int index, int tileSize, MapConfig map, GamePanel gamePanel) {
         this.index = index;
         this.tileSize = tileSize;
         obstacles = new ArrayList<>();
+        keyFields = new ArrayList<>();
+        greenBoxes = new ArrayList<>();
+        gameConfig = new GameConfig();
         this.gamePanel = gamePanel;
         for(int v = 0; v < map.getVSize(); v++) {
             for(int u = 0; u < map.getUSize(); u++) {
@@ -33,9 +39,22 @@ public class Level {
             case '$':
                 createAndAddPlayer(u, v);
                 break;
+            case 'x':
+                createAndAddKeyField(u, v);
+                break;
+            case 'o':
+                createAndAddGreenBox(u, v);
+                break;
             default:
+
                 //todo throw runtime exception
         }
+    }
+
+    private void createAndAddGreenBox(int u, int v) {
+        GreenBox greenBox = new GreenBox(tileSize, u, v);
+        greenBoxes.add(greenBox);
+
     }
 
     private void createAndAddPlayer(int u, int v) {
@@ -47,11 +66,22 @@ public class Level {
         obstacles.add(obstacle);
     }
 
+    private void createAndAddKeyField(int u, int v) {
+        KeyField keyField = new KeyField(tileSize, u, v);
+        keyFields.add(keyField);
+    }
+
     public void render() {
         Graphics g = gamePanel.getGraphics();
         gamePanel.renderBackground(Color.GRAY);
         for(Obstacle obstacle : obstacles) {
             obstacle.render(g);
+        }
+        for(KeyField keyField : keyFields) {
+            keyField.render(g);
+        }
+        for(GreenBox greenBox : greenBoxes) {
+            greenBox.render(g);
         }
         player.render(g);
         gamePanel.repaint();
