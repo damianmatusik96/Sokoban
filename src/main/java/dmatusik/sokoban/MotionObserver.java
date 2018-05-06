@@ -1,5 +1,5 @@
 package dmatusik.sokoban;
 
-public interface AnimationObserver {
+public interface MotionObserver {
     void animationCompleted();
 }

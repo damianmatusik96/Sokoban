@@ -1,13 +1,14 @@
 package dmatusik.sokoban;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import static java.awt.event.KeyEvent.*;
 
-public class Player implements Renderable, KeyListener, AnimationObserver {
-    private Rectangle boxBounds;
+public class Player implements Renderable, KeyListener, MotionObserver {
+    private Rectangle bounds;
     private boolean isAnimated;
     private GamePanel gamePanel;
 
@@ -15,15 +16,16 @@ public class Player implements Renderable, KeyListener, AnimationObserver {
         isAnimated = false;
         int x = size * u;
         int y = size * v;
-        boxBounds = new Rectangle(x, y, size, size);
+        bounds = new Rectangle(x, y, size, size);
         this.gamePanel = gamePanel;
 
     }
     @Override
     public void render(Graphics g) {
-       if(!isAnimated) {
-           DrawingTools.renderPlayer(g, boxBounds);
-       }
+        g.setColor(Color.WHITE);
+        g.drawOval(bounds.x, bounds.y, bounds.width, bounds.height);
+        g.setColor(Color.RED);
+        g.fillOval(bounds.x, bounds.y, bounds.width, bounds.height);
     }
 
     @Override
@@ -72,11 +74,11 @@ public class Player implements Renderable, KeyListener, AnimationObserver {
     public void animationCompleted() {
         isAnimated = false;
     }
+
     private void move(Direction direction) {
-        MathTools.moveBox(direction, boxBounds, boxBounds.width);
-        PlayerAnimation animation = new PlayerAnimation(gamePanel, 1000L, 33L, boxBounds, direction);
-        animation.setAnimationObserver(this);
-        animation.start();
+        PlayerMover mover = new PlayerMover(gamePanel, 1000L, 33L, bounds, direction);
+        mover.setMotionObserver(this);
+        mover.start();
         isAnimated = true;
     }
 

@@ -7,28 +7,28 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class PlayerAnimation implements Runnable {
+public class PlayerMover implements Runnable {
     private int maxI;
     private int i;
-    private Rectangle animationBox;
+    private Rectangle playerBounds;
     private GamePanel gamePanel;
     private long period;
-    private AnimationObserver observer;
+    private MotionObserver observer;
     private Direction direction;
     private ScheduledExecutorService loop;
 
-    public PlayerAnimation(GamePanel gamePanel, long duration, long period, Rectangle boxBounds, Direction direction) {
+    public PlayerMover(GamePanel gamePanel, long duration, long period, Rectangle playerBounds, Direction direction) {
         i = 0;
         maxI = (int)((float)duration/period);
         this.period = period;
         observer = null;
         this.gamePanel = gamePanel;
-        animationBox = new Rectangle(boxBounds);
+        this.playerBounds = playerBounds;
         this.direction = direction;
         loop = Executors.newSingleThreadScheduledExecutor();
     }
 
-    public void setAnimationObserver(AnimationObserver observer){
+    public void setMotionObserver(MotionObserver observer){
         this.observer = observer;
     }
 
@@ -38,15 +38,11 @@ public class PlayerAnimation implements Runnable {
 
     @Override
     public void run() {
-        Graphics g = gamePanel.getGraphics();
-
         if(i++ < maxI) {
             SwingUtilities.invokeLater(new Runnable(){
                 @Override
                 public void run() {
-                    DrawingTools.clearTile(g, animationBox);
-                    MathTools.moveBox(direction, animationBox, 1);
-                    DrawingTools.renderPlayer(g, animationBox);
+                    MathTools.moveBox(direction, playerBounds, 1);
                     gamePanel.repaint();
                 }
             });
