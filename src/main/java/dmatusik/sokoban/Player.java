@@ -30,7 +30,6 @@ public class Player implements Renderable, KeyListener, AnimationObserver {
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() =='d') {
             System.out.println("referes");
-            Launch.LVL.render();
         }
     }
 

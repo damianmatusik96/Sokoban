@@ -14,6 +14,7 @@ public class Level {
     private List<GreenBox> greenBoxes;
     private Player player;
     private GameConfig gameConfig;
+    private Background background;
 
     public Level(int index, int tileSize, MapConfig map, GamePanel gamePanel) {
         this.index = index;
@@ -23,12 +24,20 @@ public class Level {
         greenBoxes = new ArrayList<>();
         gameConfig = new GameConfig();
         this.gamePanel = gamePanel;
+        background = new Background(Color.GRAY, gamePanel.getViewXSize(), gamePanel.getViewYSize());
         for(int v = 0; v < map.getVSize(); v++) {
             for(int u = 0; u < map.getUSize(); u++) {
                 char symbol = map.getSymbol(u, v);
                 createAndAddObject(u, v, symbol);
             }
         }
+        List<Renderable> renderables = new ArrayList<>();
+        renderables.add(background);
+        renderables.addAll(obstacles);
+        renderables.addAll(keyFields);
+        renderables.addAll(greenBoxes);
+        renderables.add(player);
+        gamePanel.setRenderables(renderables);
         gamePanel.addKeyListener(player);
     }
     private void createAndAddObject(int u, int v, char symbol) {
@@ -69,22 +78,6 @@ public class Level {
     private void createAndAddKeyField(int u, int v) {
         KeyField keyField = new KeyField(tileSize, u, v);
         keyFields.add(keyField);
-    }
-
-    public void render() {
-        Graphics g = gamePanel.getGraphics();
-        gamePanel.renderBackground(Color.GRAY);
-        for(Obstacle obstacle : obstacles) {
-            obstacle.render(g);
-        }
-        for(KeyField keyField : keyFields) {
-            keyField.render(g);
-        }
-        for(GreenBox greenBox : greenBoxes) {
-            greenBox.render(g);
-        }
-        player.render(g);
-        gamePanel.repaint();
     }
 
 }
