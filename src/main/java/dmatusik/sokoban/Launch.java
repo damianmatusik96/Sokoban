@@ -20,7 +20,6 @@ public class Launch {
                 frame.setVisible(true);
             }
         });
-
     }
     private static MenuBar createMenuBar(GamePanel gamePanel){
         JMenuItem newgame = new NewGameButton(30, gamePanel);

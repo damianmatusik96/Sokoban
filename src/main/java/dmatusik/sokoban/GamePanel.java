@@ -1,7 +1,6 @@
 package dmatusik.sokoban;
 
 import javax.swing.JPanel;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel(int viewXSize, int viewYSize){
         view = new BufferedImage(viewXSize, viewYSize, BufferedImage.TYPE_INT_ARGB);
-        renderables = new ArrayList<>();
+            renderables = new ArrayList<>();
     }
 
     @Override

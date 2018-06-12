@@ -11,14 +11,15 @@ public class Player implements Renderable, KeyListener, MotionObserver {
     private Rectangle bounds;
     private boolean isAnimated;
     private GamePanel gamePanel;
+    private Level level;
 
-    public Player(int size, int u, int v, GamePanel gamePanel) {
+    public Player(int size, int u, int v, GamePanel gamePanel, Level level) {
         isAnimated = false;
         int x = size * u;
         int y = size * v;
         bounds = new Rectangle(x, y, size, size);
         this.gamePanel = gamePanel;
-
+        this.level = level;
     }
     @Override
     public void render(Graphics g) {
@@ -43,18 +44,30 @@ public class Player implements Renderable, KeyListener, MotionObserver {
 
         switch(e.getKeyCode()) {
             case VK_UP:
+                if(level.findGreenBox(bounds.x, bounds.y - bounds.height) != null) {
+                    level.findGreenBox(bounds.x, bounds.y - bounds.height).moveBox(Direction.UP);
+                }
                 move(Direction.UP);
                 break;
 
             case VK_DOWN:
+                if(level.findGreenBox(bounds.x, bounds.y + bounds.height) != null) {
+                    level.findGreenBox(bounds.x, bounds.y + bounds.height).moveBox(Direction.DOWN);
+                }
                 move(Direction.DOWN);
                 break;
 
             case VK_LEFT:
+                if(level.findGreenBox(bounds.x - bounds.width, bounds.y) != null) {
+                    level.findGreenBox(bounds.x - bounds.width, bounds.y).moveBox(Direction.LEFT);
+                }
                 move(Direction.LEFT);
                 break;
 
             case VK_RIGHT:
+                if(level.findGreenBox(bounds.x + bounds.width, bounds.y) != null) {
+                    level.findGreenBox(bounds.x + bounds.width, bounds.y).moveBox(Direction.RIGHT);
+                }
                 move(Direction.RIGHT);
                 break;
 

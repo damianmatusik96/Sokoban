@@ -12,4 +12,5 @@ public class MenuBar extends JMenuBar {
         }
         add(menu);
     }
+
 }

@@ -1,56 +1,50 @@
 package dmatusik.sokoban;
 
 import javax.swing.SwingUtilities;
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class PlayerMover implements Runnable {
-    private int maxI;
+public class GreenBoxMover implements Runnable {
     private int i;
-    private Rectangle playerBounds;
-    private GamePanel gamePanel;
+    private int maxI;
     private long period;
+    private Rectangle boxBounds;
+    private GamePanel gamePanel;
+    private Player player;
     private MotionObserver observer;
     private Direction direction;
     private ScheduledExecutorService loop;
 
-    public PlayerMover(GamePanel gamePanel, long duration, long period, Rectangle playerBounds, Direction direction) {
+    public GreenBoxMover(GamePanel gamePanel, long duration, long period, Rectangle boxBounds, Direction direction) {
         i = 0;
         maxI = (int)((float)duration/period);
         this.period = period;
         observer = null;
         this.gamePanel = gamePanel;
-        this.playerBounds = playerBounds;
+        this.boxBounds = boxBounds;
         this.direction = direction;
         loop = Executors.newSingleThreadScheduledExecutor();
     }
-
-    public void setMotionObserver(MotionObserver observer){
+    public void setMotionObserver(MotionObserver observer) {
         this.observer = observer;
     }
-
     public void start() {
         loop.scheduleAtFixedRate(this, 0, period, TimeUnit.MILLISECONDS);
     }
-
     @Override
     public void run() {
         if(i++ < maxI) {
             SwingUtilities.invokeLater(() -> {
-                {
-                    MathTools.moveBox(direction, playerBounds, 1);
-                    gamePanel.repaint();
-                }
+                MathTools.moveBox(direction, boxBounds, 1);
+                gamePanel.repaint();
             });
         } else {
             loop.shutdown();
-            if(observer != null) {
+            if (observer != null) {
                 observer.animationCompleted();
             }
         }
     }
-
 }
